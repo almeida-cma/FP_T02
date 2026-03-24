@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>TEMA 02 | Fluxogramas e Condicionais - Todos os Exemplos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); min-height: 100vh; padding: 1.5rem; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        
+        .hero { text-align: center; color: white; margin-bottom: 2rem; }
+        .hero h1 { font-size: 2rem; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.8rem; flex-wrap: wrap; }
+        .hero p { opacity: 0.9; max-width: 700px; margin: 0 auto; }
+        
+        .platform-link { background: #ff8c42; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 2rem; margin-top: 1rem; transition: 0.2s; }
+        .platform-link a { color: white; text-decoration: none; font-weight: 600; }
+        .platform-link:hover { background: #e67e22; transform: translateY(-2px); }
+        
+        .tabs { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+        .tab-btn { background: rgba(255,255,255,0.1); border: none; padding: 0.7rem 1.5rem; border-radius: 3rem; font-weight: 600; cursor: pointer; color: white; font-size: 0.9rem; transition: 0.3s; }
+        .tab-btn.active { background: #ff8c42; color: white; }
+        .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.25); }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .section-title { font-size: 1.5rem; font-weight: 700; margin: 1.5rem 0 1rem; color: #ff8c42; display: flex; align-items: center; gap: 0.5rem; border-left: 4px solid #ff8c42; padding-left: 1rem; }
+        
+        .examples-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .example-card { background: white; border-radius: 1.2rem; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2); transition: transform 0.2s; }
+        .example-card:hover { transform: translateY(-3px); }
+        
+        .card-header { padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+        .card-header.var { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
+        .card-header.fluxo { background: linear-gradient(135deg, #f093fb, #f5576c); color: white; }
+        .card-header.cond { background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; }
+        .card-header i { font-size: 1.5rem; }
+        .card-header h3 { font-size: 1.2rem; }
+        
+        .card-body { padding: 1.2rem; }
+        .descricao { color: #475569; font-size: 0.85rem; margin-bottom: 1rem; padding: 0.5rem; background: #f1f5f9; border-radius: 0.8rem; }
+        
+        .code-block { background: #1e293b; color: #e2e8f0; font-family: 'Fira Code', monospace; font-size: 0.7rem; padding: 1rem; border-radius: 0.8rem; overflow-x: auto; white-space: pre; margin: 0.8rem 0; border-left: 3px solid #ff8c42; line-height: 1.4; }
+        
+        .btn-copy { background: #ff8c42; border: none; padding: 0.4rem 1rem; border-radius: 2rem; font-weight: 600; cursor: pointer; font-size: 0.75rem; display: inline-flex; align-items: center; gap: 0.4rem; transition: 0.2s; color: white; }
+        .btn-copy:hover { background: #e67e22; transform: scale(0.97); }
+        
+        .simulacao-area { margin-top: 1rem; padding: 1rem; background: #f1f5f9; border-radius: 1rem; text-align: center; }
+        .simulacao-area input, .simulacao-area select { padding: 0.5rem; border-radius: 2rem; border: 1px solid #cbd5e1; margin: 0.3rem; }
+        .btn-sim { background: #3b82f6; border: none; padding: 0.4rem 1rem; border-radius: 2rem; cursor: pointer; color: white; font-size: 0.75rem; margin-top: 0.5rem; }
+        .result-sim { background: #0f172a; color: #a5f3c3; padding: 0.8rem; border-radius: 0.8rem; font-family: monospace; font-size: 0.75rem; margin-top: 0.8rem; text-align: left; }
+        
+        @media (max-width: 900px) { .examples-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 1.5rem; } .tab-btn { padding: 0.5rem 1rem; font-size: 0.8rem; } }
+        .footer { text-align: center; color: white; margin-top: 2rem; padding: 1.5rem; background: rgba(0,0,0,0.2); border-radius: 1.5rem; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1><i class="fas fa-diagram-project"></i> TEMA 02: Fluxogramas e Condicionais <i class="fas fa-code-branch"></i></h1>
+        <p>Todos os exemplos do material didático | Código indentado para copiar e colar no Portugol Webstudio</p>
+        <div class="platform-link"><i class="fas fa-rocket"></i><a href="https://portugol.dev" target="_blank">Acessar Portugol Webstudio →</a></div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('variaveis')"><i class="fas fa-database"></i> Variáveis</button>
+        <button class="tab-btn" onclick="switchTab('fluxogramas')"><i class="fas fa-project-diagram"></i> Fluxogramas</button>
+        <button class="tab-btn" onclick="switchTab('condicionais')"><i class="fas fa-code-branch"></i> Condicionais</button>
+        <button class="tab-btn" onclick="switchTab('exercicios')"><i class="fas fa-puzzle-piece"></i> Exercícios</button>
+    </div>
+
+    <!-- ==================== VARIÁVEIS ==================== -->
+    <div id="variaveis" class="tab-content active">
+        <div class="section-title"><i class="fas fa-cube"></i> Tipos de Variáveis</div>
+        <div class="examples-grid">
+            <!-- Variáveis Inteiras -->
+            <div class="example-card">
+                <div class="card-header var"><i class="fas fa-hashtag"></i><h3>Variáveis Inteiras (inteiro)</h3></div>
+                <div class="card-body">
+                    <div class="descricao"><i class="fas fa-info-circle"></i> Armazenam números inteiros (sem casas decimais)</div>
+                    <div class="code-block" id="codigoInteiro">
+programa {
+    funcao inicio() {
+        inteiro a, b, soma
+        
+        a = 10
+        b = 25
+        soma = a + b
+        
+        escreva("A soma de ", a, " + ", b, " = ", soma)
+    }
+}
+                    </div>
+                    <button class="btn-copy" onclick="copiarTexto('codigoInteiro')"><i class="fas fa-copy"></i> Copiar código</button>
+                </div>
+            </div>
+
+            <!-- Variáveis Reais -->
+            <div class="example-card">
+                <div class="card-header var"><i class="fas fa-chart-line"></i><h3>Variáveis Reais (real)</h3></div>
+                <div class="card-body">
+                    <div class="descricao"><i class="fas fa-info-circle"></i> Armazenam números com casas decimais</div>
+                    <div class="code-block" id="codigoReal">
+programa {
+    funcao inicio() {
+        real altura, peso, imc
+        
+        escreva("Digite sua altura: ")
+        leia(altura)
+        escreva("Digite seu peso: ")
+        leia(peso)
+        
+        imc = peso / (altura * altura)
+        escreva("Seu IMC é: ", imc)
+    }
+}
+                    </div>
+                    <button class="btn-copy" onclick="copiarTexto('codigoReal')"><i class="fas fa-copy"></i> Copiar código</button>
+                    <div class="simulacao-area">
+                        <input type="number" id="alturaSim" placeholder="Altura (m)" step="0.01">
+                        <input type="number" id="pesoSim" placeholder="Peso (kg)">
+                        <button class="btn-sim" onclick="simularIMC()"><i class="fas fa-play"></i> Simular</button>
+                        <div id="imcResultado" class="result-sim"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Variáveis Lógicas -->
+            <div class="example-card">
+                <div class="card-header var"><i class="fas fa-check-circle"></i><h3>Variáveis Lógicas (logico)</h3></div>
+                <div class="card-body">
+                    <div class="descricao"><i class="fas fa-info-circle"></i> Armazenam verdadeiro ou falso</div>
+                    <div class="code-block" id="codigoLogico">
+programa {
+    funcao inicio() {
+        logico aprovado
+        real nota
+        
+        escreva("Digite a nota: ")
+        leia(nota)
+        
+        aprovado = (nota >= 7)
+        
+        se (aprovado == verdadeiro) {
+            escreva("Aluno APROVADO!")
+        } senao {
+            escreva("Aluno REPROVADO!")
+        }
+    }
+}
+                    </div>
+                    <button class="btn-copy" onclick="copiarTexto('codigoLogico')"><i class="fas fa-copy"></i> Copiar código</button>
+                </div>
+            </div>
+
+            <!-- Variáveis Caractere -->
+            <div class="example-card">
+                <div class="card-header var"><i class="fas fa-font"></i><h3>Variáveis Caractere (cadeia)</h3></div>
+                <div class="card-body">
+                    <div class="descricao"><i class="fas fa-info-circle"></i> Armazenam textos e palavras</div>
+                    <div class="code-block" id="codigoCaractere">
+programa {
+    funcao inicio() {
+        cadeia nome, curso
+        
+        escreva("Digite seu nome: ")
+        leia(nome)
+        escreva("Digite seu curso: ")
+        leia(curso)
+        
+        escreva("Olá, ", nome, "! Bem-vindo ao curso de ", curso)
+    }
+}
+                    </div>
+                    <button class="btn-copy" onclick="copiarTexto('codigoCaractere')"><i class="fas fa-copy"></i> Copiar código</button>
+                    <div class="simulacao-area">
+                        <input type="text" id="nomeSim" placeholder="Seu nome">
+                        <input type="text" id="cursoSim" placeholder="Curso">
+                        <button class="btn-sim" onclick="simularSaudacao()"><i class="fas fa-play"></i> Simular</button>
+                        <div id="saudacaoResultado" class="result-sim"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Operadores Aritméticos -->
+            <div class="example-card">
+                <div class="card-header var"><i class="fas fa-calculator"></i><h3>Operadores Aritméticos</h3></div>
+                <div class="card-body">
+                    <div class="descricao"><i class="fas fa-info-circle"></i> + (soma), - (subtração), * (multiplicação), / (divisão), % (resto)</div>
+                    <div class="code-block" id="codigoOperadores">
+programa {
+    funcao inicio() {
+        inteiro a, b
+        real resultado
+        
+        escreva("Digite o primeiro número: ")
+        leia(a)
+        escreva("Digite o segundo número: ")
+        leia(b)
+        
+        escreva(a, " + ", b, " = ", a + b, "\n")
+        escreva(a, " - ", b, " = ", a - b, "\n")
+        escreva(a, " * ", b, " = ", a * b, "\n")
+        escreva(a, " / ", b, " = ", a / b)
+    }
+}
+                    </div>
+                    <button class="btn-copy" onclick="copiarTexto('codigoOperadores')"><i class="fas fa-copy"></i> Copiar código</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== FLUXOGRAMAS ==================== -->
+    <div id="fluxogramas" class="tab-content">
+        <div class="section-title"><i class="fas fa-project-diagram"></i> Fluxogramas - Representação Gráfica</div>
+        <div class="examples-grid">
+            <!-- Fluxograma Soma -->
+            <div class="example-card">
+                <div class="card-header fluxo"><i class="fas fa-plus-circle"></i><h3>Fluxograma: Soma de Dois Valores</h3></div>
+                <div class="card-body">
+                    <div class="descricao"><i class="fas fa-info-circle"></i> Representação gráfica de um algoritmo de soma</div>
+                    <div class="code-block" id="codigoFluxoSoma">
+programa {
+    funcao inicio() {
+        inteiro a, b, soma
+        
+        escreva("Digite o primeiro valor: ")
+        leia(a)
+        escreva("Digite o segundo valor: ")
+        leia(b)
+        
+        soma = a + b
+        
+        escreva("A soma é: ", soma)
+    }
+}
+                    </div>
+                    <button class="btn-copy" onclick="copiarTexto('codigoFluxoSoma')"><i class="fas fa-copy"></i> Copiar código</button>
+                    <div class="simulacao-area">
+                        <input type="number" id="numA" placeholder="Valor A">
+                        <input type="number" id="numB" placeholder="Valor B">
+                        <button class="btn-sim" onclick="simularSoma()"><i class="fas fa-play"></i> Executar Soma</button>
+                        <div id="somaResultado" class="result-sim"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fluxograma Média -->
+            <div class="example-card">
+                <div class="card-header fluxo"><i class="fas fa-chart-simple"></i><h3>Fluxograma: Média com Decisão</h3></div>
+                <div class="card-body">
+                    <div class="descricao"><i class="fas fa-info-circle"></i> Fluxograma com condicional (SE média >= 7 → APROVADO)</div>
+                    <div class="code-block" id="codigoFluxoMedia">
+programa {
+    funcao inicio() {
+        real n1, n2, media
+        
+        escreva("Nota 1: ")
+        leia(n1)
+        escreva("Nota 2: ")
+        leia(n2)
+        
+        media = (n1 + n2) / 2
+        
+        se (media >= 7) {
+            escreva("APROVADO! Média: ", media)
+        } senao {
+            escreva("REPROVADO! Média: ", media)
+        }
+    }
+}
+                    </div>
+                    <button class="btn-copy" onclick="copiarTexto('codigoFluxoMedia')"><i class="fas fa-copy"></i> Copiar código</button>
+                    <div class="simulacao-area">
+                        <input type="number" id="notaMedia1" placeholder="Nota 1">
+                        <input type="number" id="notaMedia2" placeholder="Nota 2">
+                        <button class="btn-sim" onclick="simularMedia()"><i class="fas fa-play"></i> Calcular Média</button>
+                        <div id="mediaResultado" class="result-sim"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CONDICIONAIS ==================== -->
+    <div id="condicionais" class="tab-content">
+        <div class="section-title"><i class="fas fa-code-branch"></i> Condicionais - Tomando Decisões</div>
+        <div class="examples-grid">
+            <!-- Condicional Simples -->
+            <div class="example-card">
+                <div class="card-header cond"><i class="fas fa-code-branch"></i><h3>Condicional Simples (SE)</h3></div>
+                <div class="card-body">
+                    <div class="descricao"><i class="fas fa-info-circle"></i> Executa ação apenas se condição for verdadeira</div>
+                    <div class="code-block" id="codigoSimples">
+programa {
+    funcao inicio() {
+        inteiro valor
+        
+        escreva("Digite um valor: ")
+        leia(valor)
+        
+        se (valor <= 20) {
+            escreva("O valor digitado é menor ou igual a 20!")
+        }
+    }
+}
+                    </div>
+                    <button class="btn-copy" onclick="copiarTexto('codigoSimples')"><i class="fas fa-copy"></i> Copiar código</button>
+                    <div class="simulacao-area">
+                        <input type="number" id="valorSimples" placeholder="Digite um valor">
+                        <button class="btn-sim" onclick="simularSimples()"><i class="fas fa-play"></i> Verificar</button>
+                        <div id="simplesResultado" class="result-sim"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Condicional Composta -->
+            <div class="example-card">
+                <div class="card-header cond"><i class="fas fa-code-branch"></i><h3>Condicional Composta (SE/SENÃO)</h3></div>
+                <div class="card-body">
+                    <div class="descricao"><i class="fas fa-info-circle"></i> Dois caminhos: se verdadeiro, executa um bloco; senão, executa outro</div>
+                    <div class="code-block" id="codigoComposta">
+programa {
+    funcao inicio() {
+        real nota
+        
+        escreva("Digite a nota do aluno: ")
+        leia(nota)
+        
+        se (nota >= 7) {
+            escreva("Parabéns! Aprovado!")
+        } senao {
+            escreva("Reprovado. Estude mais!")
+        }
+    }
+}
+                    </div>
+                    <button class="btn-copy" onclick="copiarTexto('codigoComposta')"><i class="fas fa-copy"></i> Copiar código</button>
+                    <div class="simulacao-area">
+                        <input type="number" id="notaComposta" placeholder="Nota do aluno" step="0.1">
+                        <button class="btn-sim" onclick="simularComposta()"><i class="fas fa-play"></i> Verificar</button>
+                        <div id="compostaResultado" class="result-sim"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conectivo E -->
+            <div class="example-card">
+                <div class="card-header cond"><i class="fas fa-link"></i><h3>Conectivo Lógico "E" (&&)</h3></div>
+                <div class="card-body">
+                    <div class="descricao"><i class="fas fa-info-circle"></i> Todas as condições devem ser verdadeiras</div>
+                    <div class="code-block" id="codigoE">
+programa {
+    funcao inicio() {
+        logico salario_recebido, nao_chovendo
+        
+        escreva("Recebeu o salário? (verdadeiro/falso): ")
+        leia(salario_recebido)
+        escreva("Não está chovendo? (verdadeiro/falso): ")
+        leia(nao_chovendo)
+        
+        se (salario_recebido == verdadeiro E nao_chovendo == verdadeiro) {
+            escreva("Vou sair para comprar roupas!")
+        } senao {
+            escreva("Vou ficar em casa.")
+        }
+    }
+}
+                    </div>
+                    <button class="btn-copy" onclick="copiarTexto('codigoE')"><i class="fas fa-copy"></i> Copiar código</button>
+                    <div class="simulacao-area">
+                        <button class="btn-sim" onclick="simularE(true, true)">💰✅ + ☀️✅</button>
+                        <button class="btn-sim" onclick="simularE(false, true)">💰❌ + ☀️✅</button>
+                        <button class="btn-sim" onclick="simularE(true, false)">💰✅ + ☀️❌</button>
+                        <div id="eResultado" class="result-sim"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conectivo OU -->
+            <div class="example-card">
+                <div class="card-header cond"><i class="fas fa-link"></i><h3>Conectivo Lógico "OU" (||)</h3></div>
+                <div class="card-body">
+                    <div class="descricao"><i class="fas fa-info-circle"></i> Pelo menos uma condição deve ser verdadeira</div>
+                    <div class="code-block" id="codigoOU">
+programa {
+    funcao inicio() {
+        logico onibusA, onibusB
+        
+        escreva("O ônibus A passou? (verdadeiro/falso): ")
+        leia(onibusA)
+        escreva("O ônibus B passou? (verdadeiro/falso): ")
+        leia(onibusB)
+        
+        se (onibusA == verdadeiro OU onibusB == verdadeiro) {
+            escreva("Conseguirei chegar no horário!")
+        } senao {
+            escreva("Vou me atrasar!")
+        }
+    }
+}
+                    </div>
+                    <button class="btn-copy" onclick="copiarTexto('codigoOU')"><i class="fas fa-copy"></i> Copiar código</button>
+                    <div class="simulacao-area">
+                        <button class="btn-sim" onclick="simularOU(true, true)">🚌A✅ + 🚌B✅</button>
+                        <button class="btn-sim" onclick="simularOU(true, false)">🚌A✅ + 🚌B❌</button>
+                        <button class="btn-sim" onclick="simularOU(false, false)">🚌A❌ + 🚌B❌</button>
+                        <div id="ouResultado" class="result-sim"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESCOLHA CASO -->
+            <div class="example-card">
+                <div class="card-header cond"><i class="fas fa-list-ul"></i><h3>Estrutura ESCOLHA (Caso)</h3></div>
+                <div class="card-body">
+                    <div class="descricao"><i class="fas fa-info-circle"></i> Ideal para menus com múltiplas opções</div>
+                    <div class="code-block" id="codigoEscolha">
+programa {
+    funcao inicio() {
+        inteiro opcao
+        
+        escreva("=== MENU PRINCIPAL ===\n")
+        escreva("1 - Cadastrar produto\n")
+        escreva("2 - Listar produtos\n")
+        escreva("3 - Sair\n")
+        escreva("Escolha uma opção: ")
+        leia(opcao)
+        
+        escolha (opcao) {
+            caso 1:
+                escreva("Você escolheu CADASTRAR")
+            caso 2:
+                escreva("Você escolheu LISTAR")
+            caso 3:
+                escreva("Saindo do sistema...")
+            senao:
+                escreva("Opção inválida!")
+        }
+    }
+}
+                    </div>
+                    <button class="btn-copy" onclick="copiarTexto('codigoEscolha')"><i class="fas fa-copy"></i> Copiar código</button>
+                    <div class="simulacao-area">
+                        <select id="opcaoMenu">
+                            <option value="1">1 - Cadastrar</option>
+                            <option value="2">2 - Listar</option>
+                            <option value="3">3 - Sair</option>
+                        </select>
+                        <button class="btn-sim" onclick="simularMenu()"><i class="fas fa-play"></i> Executar</button>
+                        <div id="menuResultado" class="result-sim"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== EXERCÍCIOS ==================== -->
+    <div id="exercicios" class="tab-content">
+        <div class="section-title"><i class="fas fa-puzzle-piece"></i> Exercícios Resolvidos</div>
+        <div class="examples-grid">
+            <!-- Exercício 1: Desconto com Código -->
+            <div class="example-card">
+                <div class="card-header cond"><i class="fas fa-tag"></i><h3>Exercício: Desconto Promocional</h3></div>
+                <div class="card-body">
+                    <div class="descricao"><i class="fas fa-info-circle"></i> Aplicar 25% de desconto se código for "VBFMZB" ou "HT2Y8E"</div>
+                    <div class="code-block" id="codigoDesconto">
+programa {
+    funcao inicio() {
+        cadeia codigo
+        real valor, valor_final
+        
+        escreva("Digite o código promocional: ")
+        leia(codigo)
+        escreva("Digite o valor do produto: R$ ")
+        leia(valor)
+        
+        se (codigo == "VBFMZB" OU codigo == "HT2Y8E") {
+            valor_final = valor - (valor * 0.25)
+            escreva("Código válido! Desconto de 25% aplicado.\n")
+            escreva("Valor com desconto: R$ ", valor_final)
+        } senao {
+            escreva("Código inválido! Sem desconto.\n")
+            escreva("Valor a pagar: R$ ", valor)
+        }
+    }
+}
+                    </div>
+                    <button class="btn-copy" onclick="copiarTexto('codigoDesconto')"><i class="fas fa-copy"></i> Copiar código</button>
+                    <div class="simulacao-area">
+                        <input type="text" id="codigoDesc" placeholder="Código promocional">
+                        <input type="number" id="valorDesc" placeholder="Valor do produto">
+                        <button class="btn-sim" onclick="simularDesconto()"><i class="fas fa-play"></i> Calcular</button>
+                        <div id="descontoResultado" class="result-sim"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercício 2: Média com Nome -->
+            <div class="example-card">
+                <div class="card-header cond"><i class="fas fa-graduation-cap"></i><h3>Exercício: Média com Nome</h3></div>
+                <div class="card-body">
+                    <div class="descricao"><i class="fas fa-info-circle"></i> Calcular média e exibir nome do aluno</div>
+                    <div class="code-block" id="codigoMediaNome">
+programa {
+    funcao inicio() {
+        cadeia nome
+        real n1, n2, n3, media
+        
+        escreva("Digite o nome do aluno: ")
+        leia(nome)
+        escreva("Nota 1: ")
+        leia(n1)
+        escreva("Nota 2: ")
+        leia(n2)
+        escreva("Nota 3: ")
+        leia(n3)
+        
+        media = (n1 + n2 + n3) / 3
+        
+        escreva("Aluno: ", nome, "\n")
+        escreva("Média: ", media, "\n")
+        
+        se (media >= 7) {
+            escreva("Situação: APROVADO!")
+        } senao {
+            escreva("Situação: REPROVADO!")
+        }
+    }
+}
+                    </div>
+                    <button class="btn-copy" onclick="copiarTexto('codigoMediaNome')"><i class="fas fa-copy"></i> Copiar código</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <i class="fas fa-code"></i> Todos os códigos são compatíveis com o <strong>Portugol Webstudio</strong> (portugol.dev)<br>
+        <i class="fas fa-copy"></i> Clique em "Copiar código" e cole no editor da plataforma para executar!
+    </div>
+</div>
+
+<script>
+    // ========== FUNÇÃO COPIAR ==========
+    function copiarTexto(elementId) {
+        const element = document.getElementById(elementId);
+        const texto = element.innerText;
+        navigator.clipboard.writeText(texto).then(() => {
+            alert("✅ Código copiado! Cole no Portugol Webstudio (portugol.dev)");
+        }).catch(() => {
+            alert("❌ Erro ao copiar. Selecione manualmente.");
+        });
+    }
+
+    // ========== FUNÇÃO TABS ==========
+    function switchTab(tabId) {
+        const tabs = document.querySelectorAll('.tab-content');
+        const buttons = document.querySelectorAll('.tab-btn');
+        tabs.forEach(t => t.classList.remove('active'));
+        buttons.forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        if (event && event.target) event.target.classList.add('active');
+    }
+
+    // ========== SIMULAÇÕES ==========
+    function simularIMC() {
+        const altura = parseFloat(document.getElementById('alturaSim').value);
+        const peso = parseFloat(document.getElementById('pesoSim').value);
+        const res = document.getElementById('imcResultado');
+        if (isNaN(altura) || isNaN(peso)) { res.innerHTML = '⚠️ Preencha altura e peso!'; return; }
+        const imc = peso / (altura * altura);
+        res.innerHTML = `📊 IMC = ${imc.toFixed(2)}<br><small>🔍 No código: real altura, peso, imc</small>`;
+    }
+
+    function simularSaudacao() {
+        const nome = document.getElementById('nomeSim').value;
+        const curso = document.getElementById('cursoSim').value;
+        const res = document.getElementById('saudacaoResultado');
+        if (!nome || !curso) { res.innerHTML = '⚠️ Preencha nome e curso!'; return; }
+        res.innerHTML = `👋 Olá, ${nome}! Bem-vindo ao curso de ${curso}<br><small>🔍 Variável tipo cadeia armazena textos</small>`;
+    }
+
+    function simularSoma() {
+        const a = parseFloat(document.getElementById('numA').value);
+        const b = parseFloat(document.getElementById('numB').value);
+        const res = document.getElementById('somaResultado');
+        if (isNaN(a) || isNaN(b)) { res.innerHTML = '⚠️ Digite os dois valores!'; return; }
+        res.innerHTML = `🔢 ${a} + ${b} = ${a + b}<br><small>🔍 Fluxograma: entrada → processamento → saída</small>`;
+    }
+
+    function simularMedia() {
+        const n1 = parseFloat(document.getElementById('notaMedia1').value);
+        const n2 = parseFloat(document.getElementById('notaMedia2').value);
+        const res = document.getElementById('mediaResultado');
+        if (isNaN(n1) || isNaN(n2)) { res.innerHTML = '⚠️ Digite as duas notas!'; return; }
+        const media = (n1 + n2) / 2;
+        const status = media >= 7 ? '✅ APROVADO!' : '❌ REPROVADO!';
+        res.innerHTML = `📊 Média: ${media.toFixed(2)}<br>${status}<br><small>🔍 Fluxograma com decisão (SE média >= 7)</small>`;
+    }
+
+    function simularSimples() {
+        const valor = parseFloat(document.getElementById('valorSimples').value);
+        const res = document.getElementById('simplesResultado');
+        if (isNaN(valor)) { res.innerHTML = '⚠️ Digite um valor!'; return; }
+        if (valor <= 20) res.innerHTML = `✅ ${valor} é menor ou igual a 20!<br><small>🔍 Condicional simples: SE (valor <= 20)</small>`;
+        else res.innerHTML = `❌ ${valor} é maior que 20.<br><small>🔍 A condição não foi atendida, então nada acontece</small>`;
+    }
+
+    function simularComposta() {
+        const nota = parseFloat(document.getElementById('notaComposta').value);
+        const res = document.getElementById('compostaResultado');
+        if (isNaN(nota)) { res.innerHTML = '⚠️ Digite uma nota!'; return; }
+        if (nota >= 7) res.innerHTML = `🎉 APROVADO! Nota: ${nota}<br><small>🔍 SE (nota >= 7) ENTÃO aprovado</small>`;
+        else res.innerHTML = `📚 REPROVADO! Nota: ${nota}<br><small>🔍 SENÃO reprovado</small>`;
+    }
+
+    function simularE(salario, chuva) {
+        const res = document.getElementById('eResultado');
+        if (salario && chuva) res.innerHTML = `💰✅ + ☀️✅ → VOU SAIR PARA COMPRAR ROUPAS!<br><small>🔍 E (&&): ambas condições verdadeiras</small>`;
+        else res.innerHTML = `💰${salario ? '✅' : '❌'} + ☀️${chuva ? '✅' : '❌'} → VOU FICAR EM CASA.<br><small>🔍 Pelo menos uma condição é falsa</small>`;
+    }
+
+    function simularOU(ona, onb) {
+        const res = document.getElementById('ouResultado');
+        if (ona || onb) res.innerHTML = `🚌A${ona ? '✅' : '❌'} + 🚌B${onb ? '✅' : '❌'} → CONSEGUIREI CHEGAR NO HORÁRIO!<br><small>🔍 OU (||): pelo menos uma verdadeira</small>`;
+        else res.innerHTML = `🚌A❌ + 🚌B❌ → VOU ME ATRASAR!<br><small>🔍 Nenhuma condição verdadeira</small>`;
+    }
+
+    function simularMenu() {
+        const opcao = document.getElementById('opcaoMenu').value;
+        const res = document.getElementById('menuResultado');
+        switch(opcao) {
+            case '1': res.innerHTML = `📝 Opção 1: CADASTRAR produto<br><small>🔍 ESCOLHA (opcao) { CASO 1: cadastrar }</small>`; break;
+            case '2': res.innerHTML = `📋 Opção 2: LISTAR produtos<br><small>🔍 ESCOLHA (opcao) { CASO 2: listar }</small>`; break;
+            case '3': res.innerHTML = `👋 Opção 3: SAIR do sistema<br><small>🔍 ESCOLHA (opcao) { CASO 3: sair }</small>`; break;
+        }
+    }
+
+    function simularDesconto() {
+        const codigo = document.getElementById('codigoDesc').value;
+        const valor = parseFloat(document.getElementById('valorDesc').value);
+        const res = document.getElementById('descontoResultado');
+        if (!codigo || isNaN(valor)) { res.innerHTML = '⚠️ Preencha código e valor!'; return; }
+        if (codigo.toUpperCase() === "VBFMZB" || codigo.toUpperCase() === "HT2Y8E") {
+            const valorFinal = valor - (valor * 0.25);
+            res.innerHTML = `✅ Código VÁLIDO!<br>Valor original: R$ ${valor.toFixed(2)}<br>Desconto 25%: R$ ${(valor*0.25).toFixed(2)}<br><strong>Total: R$ ${valorFinal.toFixed(2)}</strong><br><small>🔍 SE (codigo == "VBFMZB" OU codigo == "HT2Y8E")</small>`;
+        } else {
+            res.innerHTML = `❌ Código INVÁLIDO!<br>Valor original: R$ ${valor.toFixed(2)}<br><strong>Total: R$ ${valor.toFixed(2)}</strong><br><small>🔍 Código não corresponde, SEM desconto</small>`;
+        }
+    }
+</script>
+</body>
+</html>

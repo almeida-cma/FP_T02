@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>TEMA 02 | Fluxogramas e Condicionais - Portugol Webstudio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); min-height: 100vh; padding: 1.5rem; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        
+        .hero { text-align: center; color: white; margin-bottom: 2rem; }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: center; gap: 0.8rem; flex-wrap: wrap; }
+        .hero p { opacity: 0.9; max-width: 700px; margin: 0 auto; }
+        
+        .platform-link { background: #ff8c42; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 2rem; margin-top: 1rem; transition: 0.2s; }
+        .platform-link a { color: white; text-decoration: none; font-weight: 600; }
+        .platform-link:hover { background: #e67e22; transform: translateY(-2px); }
+        
+        .tabs { display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 2rem; }
+        .tab-btn { background: rgba(255,255,255,0.1); border: none; padding: 0.8rem 1.8rem; border-radius: 3rem; font-weight: 600; cursor: pointer; color: white; font-size: 1rem; transition: 0.3s; }
+        .tab-btn.active { background: #ff8c42; color: white; box-shadow: 0 5px 15px rgba(255,140,66,0.3); }
+        .tab-btn:hover:not(.active) { background: rgba(255,255,255,0.25); }
+        
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .sim-card { background: white; border-radius: 1.5rem; overflow: hidden; margin-bottom: 2rem; box-shadow: 0 20px 35px -10px rgba(0,0,0,0.3); }
+        .sim-header { padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+        .sim-header.variaveis { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
+        .sim-header.fluxograma { background: linear-gradient(135deg, #f093fb, #f5576c); color: white; }
+        .sim-header.condicional { background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; }
+        .sim-header i { font-size: 1.8rem; }
+        .sim-header h3 { font-size: 1.3rem; }
+        
+        .sim-body { padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .sim-visual { background: #f1f5f9; border-radius: 1rem; padding: 1.5rem; text-align: center; min-height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .sim-code { background: #1e293b; border-radius: 1rem; padding: 1rem; font-family: 'Fira Code', monospace; font-size: 0.75rem; color: #e2e8f0; white-space: pre; overflow-x: auto; }
+        
+        .sim-controls { display: flex; gap: 0.8rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap; }
+        .btn-sim { background: #ff8c42; border: none; padding: 0.6rem 1.5rem; border-radius: 2rem; font-weight: 600; cursor: pointer; color: white; transition: 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .btn-sim:hover { background: #e67e22; transform: scale(0.98); }
+        .btn-reset { background: #64748b; }
+        .btn-reset:hover { background: #475569; }
+        
+        .result-area { background: #0f172a; color: #a5f3c3; padding: 0.8rem; border-radius: 0.8rem; font-family: monospace; margin-top: 0.8rem; font-size: 0.8rem; width: 100%; text-align: left; }
+        .variavel-card { background: white; border-radius: 1rem; padding: 0.8rem; margin: 0.5rem 0; display: flex; justify-content: space-between; align-items: center; border: 1px solid #e2e8f0; }
+        .variavel-nome { font-weight: bold; color: #11998e; }
+        .variavel-valor { font-family: monospace; font-size: 1.1rem; }
+        
+        .fluxo-container { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+        .fluxo-passo { background: #e2e8f0; padding: 0.5rem 1rem; border-radius: 2rem; font-size: 0.8rem; transition: 0.2s; }
+        .fluxo-passo.ativo { background: #38ef7d; color: white; font-weight: bold; }
+        
+        .nota-buttons { display: flex; gap: 0.5rem; margin: 0.5rem 0; flex-wrap: wrap; justify-content: center; }
+        .nota-btn { background: #e2e8f0; border: none; padding: 0.4rem 1rem; border-radius: 2rem; cursor: pointer; }
+        
+        @media (max-width: 800px) { .sim-body { grid-template-columns: 1fr; } .hero h1 { font-size: 1.5rem; } .tab-btn { padding: 0.5rem 1rem; font-size: 0.8rem; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1><i class="fas fa-diagram-project"></i> TEMA 02: Fluxogramas e Condicionais <i class="fas fa-code-branch"></i></h1>
+        <p>Variáveis | Fluxogramas | Condicionais (SE, SENÃO, E, OU, ESCOLHA)</p>
+        <div class="platform-link"><i class="fas fa-rocket"></i><a href="https://portugol.dev" target="_blank">Acessar Portugol Webstudio →</a></div>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('variaveis')"><i class="fas fa-database"></i> Variáveis</button>
+        <button class="tab-btn" onclick="switchTab('fluxograma')"><i class="fas fa-project-diagram"></i> Fluxogramas</button>
+        <button class="tab-btn" onclick="switchTab('condicional')"><i class="fas fa-code-branch"></i> Condicionais</button>
+    </div>
+
+    <!-- ==================== VARIÁVEIS ==================== -->
+    <div id="variaveis" class="tab-content active">
+        <div class="sim-card">
+            <div class="sim-header variaveis">
+                <i class="fas fa-cube"></i>
+                <h3>📦 Variáveis - As "Caixinhas" da Memória</h3>
+            </div>
+            <div class="sim-body">
+                <div class="sim-visual">
+                    <h4><i class="fas fa-box"></i> Suas Variáveis</h4>
+                    <div id="variaveisContainer">
+                        <div class="variavel-card"><span class="variavel-nome"><i class="fas fa-hashtag"></i> idade</span><span class="variavel-valor" id="varIdade">0</span></div>
+                        <div class="variavel-card"><span class="variavel-nome"><i class="fas fa-chart-line"></i> altura</span><span class="variavel-valor" id="varAltura">0.00</span></div>
+                        <div class="variavel-card"><span class="variavel-nome"><i class="fas fa-font"></i> nome</span><span class="variavel-valor" id="varNome">---</span></div>
+                        <div class="variavel-card"><span class="variavel-nome"><i class="fas fa-check-circle"></i> aprovado</span><span class="variavel-valor" id="varAprovado">---</span></div>
+                    </div>
+                    <div class="sim-controls">
+                        <input type="number" id="inputIdade" placeholder="Idade" style="padding:0.5rem; border-radius:2rem; border:1px solid #ccc;">
+                        <input type="text" id="inputNome" placeholder="Nome" style="padding:0.5rem; border-radius:2rem; border:1px solid #ccc;">
+                        <button class="btn-sim" onclick="atualizarVariaveis()"><i class="fas fa-save"></i> Guardar</button>
+                        <button class="btn-sim btn-reset" onclick="resetarVariaveis()"><i class="fas fa-trash"></i> Resetar</button>
+                    </div>
+                    <div id="varResultado" class="result-area"></div>
+                </div>
+                <div class="sim-code">
+                    <strong>📜 Código (Portugol Webstudio):</strong>
+                    programa {
+                        funcao inicio() {
+                            inteiro idade
+                            real altura
+                            cadeia nome
+                            logico aprovado
+                            
+                            idade = 25
+                            altura = 1.75
+                            nome = "Maria"
+                            aprovado = verdadeiro
+                            
+                            escreva("Nome: ", nome)
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== FLUXOGRAMAS ==================== -->
+    <div id="fluxograma" class="tab-content">
+        <div class="sim-card">
+            <div class="sim-header fluxograma">
+                <i class="fas fa-project-diagram"></i>
+                <h3>📊 Fluxograma: Média do Aluno</h3>
+            </div>
+            <div class="sim-body">
+                <div class="sim-visual">
+                    <div class="fluxo-container">
+                        <div class="fluxo-passo" id="passo1">1. INÍCIO</div>
+                        <i class="fas fa-arrow-down"></i>
+                        <div class="fluxo-passo" id="passo2">2. Ler NOTA1</div>
+                        <i class="fas fa-arrow-down"></i>
+                        <div class="fluxo-passo" id="passo3">3. Ler NOTA2</div>
+                        <i class="fas fa-arrow-down"></i>
+                        <div class="fluxo-passo" id="passo4">4. MÉDIA = (N1+N2)/2</div>
+                        <i class="fas fa-arrow-down"></i>
+                        <div class="fluxo-passo" id="passo5">5. MÉDIA >= 7?</div>
+                        <div style="display: flex; gap: 2rem; margin: 0.5rem 0;">
+                            <div><i class="fas fa-arrow-right"></i> SIM → APROVADO</div>
+                            <div><i class="fas fa-arrow-right"></i> NÃO → REPROVADO</div>
+                        </div>
+                        <div class="fluxo-passo" id="passo6">6. FIM</div>
+                    </div>
+                    <div class="sim-controls">
+                        <input type="number" id="nota1" placeholder="Nota 1" style="padding:0.5rem; border-radius:2rem; border:1px solid #ccc; width:80px;">
+                        <input type="number" id="nota2" placeholder="Nota 2" style="padding:0.5rem; border-radius:2rem; border:1px solid #ccc; width:80px;">
+                        <button class="btn-sim" onclick="executarFluxograma()"><i class="fas fa-play"></i> Executar Fluxograma</button>
+                    </div>
+                    <div id="fluxoResultado" class="result-area"></div>
+                </div>
+                <div class="sim-code">
+                    <strong>📜 Código (Portugol Webstudio):</strong>
+                    programa {
+                        funcao inicio() {
+                            real n1, n2, media
+                            
+                            escreva("Nota 1: ")
+                            leia(n1)
+                            escreva("Nota 2: ")
+                            leia(n2)
+                            
+                            media = (n1 + n2) / 2
+                            
+                            se (media >= 7) {
+                                escreva("APROVADO!")
+                            } senao {
+                                escreva("REPROVADO!")
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== CONDICIONAIS ==================== -->
+    <div id="condicional" class="tab-content">
+        <!-- Condicional Simples -->
+        <div class="sim-card">
+            <div class="sim-header condicional">
+                <i class="fas fa-code-branch"></i>
+                <h3>🔀 Condicional Simples (SE)</h3>
+            </div>
+            <div class="sim-body">
+                <div class="sim-visual">
+                    <div>
+                        <input type="number" id="valorSimples" placeholder="Digite um valor" style="padding:0.8rem; border-radius:2rem; border:1px solid #ccc; width:200px;">
+                        <div class="sim-controls">
+                            <button class="btn-sim" onclick="verificarSimples()"><i class="fas fa-check"></i> Verificar</button>
+                        </div>
+                        <div id="simplesResultado" class="result-area"></div>
+                    </div>
+                </div>
+                <div class="sim-code">
+                    <strong>📜 SE (condição) ENTÃO</strong>
+                    se (valor <= 20) {
+                        escreva("Menor ou igual a 20!")
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Condicional Composta -->
+        <div class="sim-card">
+            <div class="sim-header condicional">
+                <i class="fas fa-code-branch"></i>
+                <h3>🔄 Condicional Composta (SE/SENÃO)</h3>
+            </div>
+            <div class="sim-body">
+                <div class="sim-visual">
+                    <div>
+                        <input type="number" id="notaAluno" placeholder="Digite a nota" style="padding:0.8rem; border-radius:2rem; border:1px solid #ccc; width:200px;">
+                        <div class="sim-controls">
+                            <button class="btn-sim" onclick="verificarNota()"><i class="fas fa-graduation-cap"></i> Verificar Aprovação</button>
+                        </div>
+                        <div id="compostaResultado" class="result-area"></div>
+                    </div>
+                </div>
+                <div class="sim-code">
+                    <strong>📜 SE (condição) ENTÃO ... SENÃO ...</strong>
+                    se (nota >= 7) {
+                        escreva("Aprovado!")
+                    } senao {
+                        escreva("Reprovado!")
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Conectivo E / OU -->
+        <div class="sim-card">
+            <div class="sim-header condicional">
+                <i class="fas fa-link"></i>
+                <h3>🔗 Conectivos Lógicos (E / OU)</h3>
+            </div>
+            <div class="sim-body">
+                <div class="sim-visual">
+                    <div>
+                        <p><strong>Desconto com código promocional:</strong></p>
+                        <input type="text" id="codigoPromo" placeholder="Código promocional" style="padding:0.8rem; border-radius:2rem; border:1px solid #ccc; width:200px;">
+                        <input type="number" id="valorProduto" placeholder="Valor do produto" style="padding:0.8rem; border-radius:2rem; border:1px solid #ccc; width:200px; margin-top:0.5rem;">
+                        <div class="sim-controls">
+                            <button class="btn-sim" onclick="aplicarDesconto()"><i class="fas fa-tag"></i> Aplicar Desconto</button>
+                        </div>
+                        <div id="descontoResultado" class="result-area"></div>
+                    </div>
+                </div>
+                <div class="sim-code">
+                    <strong>📜 SE (codigo == "VBFMZB" OU codigo == "HT2Y8E")</strong>
+                    se (codigo == "VBFMZB" ou codigo == "HT2Y8E") {
+                        valor_final = valor - (valor * 0.25)
+                    } senao {
+                        valor_final = valor
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- ESCOLHA CASO -->
+        <div class="sim-card">
+            <div class="sim-header condicional">
+                <i class="fas fa-list-ul"></i>
+                <h3>📋 Estrutura ESCOLHA (Menu)</h3>
+            </div>
+            <div class="sim-body">
+                <div class="sim-visual">
+                    <div>
+                        <p><strong>=== MENU ===</strong></p>
+                        <p>1 - Cadastrar</p>
+                        <p>2 - Listar</p>
+                        <p>3 - Sair</p>
+                        <input type="number" id="opcaoMenu" placeholder="Escolha uma opção" style="padding:0.8rem; border-radius:2rem; border:1px solid #ccc; width:200px;">
+                        <div class="sim-controls">
+                            <button class="btn-sim" onclick="executarMenu()"><i class="fas fa-check"></i> Escolher</button>
+                        </div>
+                        <div id="menuResultado" class="result-area"></div>
+                    </div>
+                </div>
+                <div class="sim-code">
+                    <strong>📜 ESCOLHA (opcao) { CASO 1: ... }</strong>
+                    escolha (opcao) {
+                        caso 1: escreva("Cadastrar")
+                        caso 2: escreva("Listar")
+                        caso 3: escreva("Sair")
+                        senao: escreva("Opção inválida")
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ========== FUNÇÃO TABS ==========
+    function switchTab(tabId) {
+        const tabs = document.querySelectorAll('.tab-content');
+        for (let i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
+        const buttons = document.querySelectorAll('.tab-btn');
+        for (let i = 0; i < buttons.length; i++) buttons[i].classList.remove('active');
+        document.getElementById(tabId).classList.add('active');
+        if (event && event.target) event.target.classList.add('active');
+    }
+
+    // ========== VARIÁVEIS ==========
+    function atualizarVariaveis() {
+        const idade = document.getElementById('inputIdade').value;
+        const nome = document.getElementById('inputNome').value;
+        if (idade) document.getElementById('varIdade').innerText = idade;
+        if (nome) document.getElementById('varNome').innerText = nome;
+        const resultado = document.getElementById('varResultado');
+        resultado.innerHTML = `✅ Variáveis atualizadas!<br>📦 idade = ${idade || 0}<br>📦 nome = "${nome || '---'}"<br><small>🔍 No Portugol: inteiro idade | cadeia nome</small>`;
+    }
+    
+    function resetarVariaveis() {
+        document.getElementById('inputIdade').value = '';
+        document.getElementById('inputNome').value = '';
+        document.getElementById('varIdade').innerText = '0';
+        document.getElementById('varAltura').innerText = '0.00';
+        document.getElementById('varNome').innerText = '---';
+        document.getElementById('varAprovado').innerText = '---';
+        document.getElementById('varResultado').innerHTML = '🔄 Variáveis resetadas!';
+    }
+
+    // ========== FLUXOGRAMA ==========
+    function executarFluxograma() {
+        const n1 = parseFloat(document.getElementById('nota1').value);
+        const n2 = parseFloat(document.getElementById('nota2').value);
+        const resultado = document.getElementById('fluxoResultado');
+        
+        if (isNaN(n1) || isNaN(n2)) {
+            resultado.innerHTML = '⚠️ Por favor, preencha as duas notas!';
+            return;
+        }
+        
+        const media = (n1 + n2) / 2;
+        const status = media >= 7 ? '✅ APROVADO! Parabéns!' : '❌ REPROVADO! Estude mais!';
+        
+        // Animação dos passos
+        const passos = ['passo1', 'passo2', 'passo3', 'passo4', 'passo5', 'passo6'];
+        for (let i = 0; i < passos.length; i++) {
+            const el = document.getElementById(passos[i]);
+            setTimeout(() => {
+                for (let p of passos) document.getElementById(p).classList.remove('ativo');
+                el.classList.add('ativo');
+            }, i * 400);
+        }
+        
+        setTimeout(() => {
+            resultado.innerHTML = `📊 Cálculo da Média:<br>Nota 1: ${n1} | Nota 2: ${n2}<br>MÉDIA = ${media.toFixed(2)}<br>${status}<br><br><small>🔍 O fluxograma mostra cada passo: entrada → processamento → decisão → saída</small>`;
+        }, 2500);
+    }
+
+    // ========== CONDICIONAL SIMPLES ==========
+    function verificarSimples() {
+        const valor = parseFloat(document.getElementById('valorSimples').value);
+        const resultado = document.getElementById('simplesResultado');
+        if (isNaN(valor)) {
+            resultado.innerHTML = '⚠️ Digite um valor numérico!';
+            return;
+        }
+        if (valor <= 20) {
+            resultado.innerHTML = `✅ ${valor} é menor ou igual a 20!<br><small>🔍 Lógica: SE (valor <= 20) ENTÃO exibir mensagem</small>`;
+        } else {
+            resultado.innerHTML = `❌ ${valor} é maior que 20.<br><small>🔍 A condição não foi atendida, então nada acontece (condicional simples).</small>`;
+        }
+    }
+
+    // ========== CONDICIONAL COMPOSTA ==========
+    function verificarNota() {
+        const nota = parseFloat(document.getElementById('notaAluno').value);
+        const resultado = document.getElementById('compostaResultado');
+        if (isNaN(nota)) {
+            resultado.innerHTML = '⚠️ Digite uma nota válida!';
+            return;
+        }
+        if (nota >= 7) {
+            resultado.innerHTML = `🎉 APROVADO! Nota: ${nota}<br><small>🔍 Lógica: SE (nota >= 7) ENTÃO aprovado; SENÃO reprovado.</small>`;
+        } else {
+            resultado.innerHTML = `📚 REPROVADO! Nota: ${nota}<br><small>🔍 Lógica: SE (nota >= 7) ENTÃO aprovado; SENÃO reprovado.</small>`;
+        }
+    }
+
+    // ========== DESCONTO (OU) ==========
+    function aplicarDesconto() {
+        const codigo = document.getElementById('codigoPromo').value;
+        const valor = parseFloat(document.getElementById('valorProduto').value);
+        const resultado = document.getElementById('descontoResultado');
+        
+        if (!codigo || isNaN(valor)) {
+            resultado.innerHTML = '⚠️ Preencha o código e o valor do produto!';
+            return;
+        }
+        
+        const codigosValidos = ["VBFMZB", "HT2Y8E"];
+        if (codigosValidos.includes(codigo.toUpperCase())) {
+            const valorFinal = valor - (valor * 0.25);
+            resultado.innerHTML = `✅ Código ${codigo.toUpperCase()} VÁLIDO!<br>Valor original: R$ ${valor.toFixed(2)}<br>Desconto de 25%: R$ ${(valor * 0.25).toFixed(2)}<br><strong>Total a pagar: R$ ${valorFinal.toFixed(2)}</strong><br><small>🔍 Lógica: SE (codigo == "VBFMZB" OU codigo == "HT2Y8E") ENTÃO desconto de 25%</small>`;
+        } else {
+            resultado.innerHTML = `❌ Código ${codigo} INVÁLIDO!<br>Valor original: R$ ${valor.toFixed(2)}<br><strong>Total a pagar: R$ ${valor.toFixed(2)}</strong><br><small>🔍 Lógica: Código não corresponde, então SEM desconto.</small>`;
+        }
+    }
+
+    // ========== ESCOLHA CASO ==========
+    function executarMenu() {
+        const opcao = parseInt(document.getElementById('opcaoMenu').value);
+        const resultado = document.getElementById('menuResultado');
+        
+        if (isNaN(opcao)) {
+            resultado.innerHTML = '⚠️ Escolha uma opção de 1 a 3!';
+            return;
+        }
+        
+        switch(opcao) {
+            case 1:
+                resultado.innerHTML = `📝 Opção 1: CADASTRAR produto<br><small>🔍 Lógica: ESCOLHA (opcao) { CASO 1: cadastrar }</small>`;
+                break;
+            case 2:
+                resultado.innerHTML = `📋 Opção 2: LISTAR produtos<br><small>🔍 Lógica: ESCOLHA (opcao) { CASO 2: listar }</small>`;
+                break;
+            case 3:
+                resultado.innerHTML = `👋 Opção 3: SAIR do sistema<br><small>🔍 Lógica: ESCOLHA (opcao) { CASO 3: sair }</small>`;
+                break;
+            default:
+                resultado.innerHTML = `⚠️ Opção ${opcao} inválida! Escolha 1, 2 ou 3.<br><small>🔍 Lógica: ESCOLHA { SENAO: opção inválida }</small>`;
+        }
+    }
+</script>
+</body>
+</html>

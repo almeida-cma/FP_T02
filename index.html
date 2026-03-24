@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>FP_T02 | Fluxogramas e Condicionais</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .hero {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero h1 i {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #ff8c42;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        /* Cards Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 10px 20px -5px rgba(0,0,0,0.2);
+            text-decoration: none;
+            color: #0f172a;
+            display: block;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.3);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon.tema { color: #3b82f6; }
+        .card-icon.pdf { color: #ef4444; }
+        .card-icon.pratica { color: #10b981; }
+        .card-icon.desafio { color: #f59e0b; }
+        .card-icon.github { color: #1e293b; }
+
+        .card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            color: #475569;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .card-footer {
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #ff8c42;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* Rodapé */
+        .footer {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1.5rem;
+            padding: 1.8rem;
+            text-align: center;
+            color: white;
+            margin-top: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.15);
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            transition: 0.2s;
+        }
+
+        .footer-links a:hover {
+            background: #ff8c42;
+            transform: scale(1.02);
+        }
+
+        hr {
+            margin: 1.5rem 0;
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .entrega {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .entrega a {
+            color: #ff8c42;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .entrega a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+            .hero h1 { font-size: 1.8rem; }
+            .grid { gap: 1rem; }
+            .card { padding: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>
+            <i class="fas fa-diagram-project"></i>
+            TEMA 02: Fluxogramas e Condicionais
+            <i class="fas fa-code-branch"></i>
+        </h1>
+        <p>Explore os materiais da aula: teoria, exemplos práticos, desafios e repositório oficial.</p>
+        <div class="badge"><i class="fas fa-laptop-code"></i> Lógica de Programação - Fundamentos</div>
+    </div>
+
+    <div class="grid">
+        <!-- 1) Tema: Fluxogramas e Condicionais -->
+        <a href="tema2.html" target="_blank" class="card">
+            <div class="card-icon tema"><i class="fas fa-book-open"></i></div>
+            <h3>📖 Tema: Fluxogramas e Condicionais</h3>
+            <p>Conteúdo completo da aula: variáveis, fluxogramas, condicionais (SE, SENÃO, E, OU, ESCOLHA) com exemplos visuais e explicações.</p>
+            <div class="card-footer"><i class="fas fa-arrow-right"></i> Acessar material</div>
+        </a>
+
+        <!-- 2) Material: TEMA_02.pdf -->
+        <a href="TEMA_02.pdf" target="_blank" class="card">
+            <div class="card-icon pdf"><i class="fas fa-file-pdf"></i></div>
+            <h3>📄 Material: TEMA_02.pdf</h3>
+            <p>Versão para download do guia completo em PDF. Inclui teoria, exemplos, exercícios e questões de fixação.</p>
+            <div class="card-footer"><i class="fas fa-download"></i> Abrir PDF</div>
+        </a>
+
+        <!-- 3) Práticas com Portugol: teste.html -->
+        <a href="teste.html" target="_blank" class="card">
+            <div class="card-icon pratica"><i class="fas fa-code"></i></div>
+            <h3>💻 Práticas com Portugol</h3>
+            <p>Ambiente interativo com exemplos de código indentado para copiar e colar no Portugol Webstudio. Simulações e botões de cópia.</p>
+            <div class="card-footer"><i class="fas fa-play"></i> Experimentar</div>
+        </a>
+
+        <!-- 4) Desafio: desafio.html -->
+        <a href="desafio.html" target="_blank" class="card">
+            <div class="card-icon desafio"><i class="fas fa-puzzle-piece"></i></div>
+            <h3>🎯 Desafio</h3>
+            <p>Resolva os desafios propostos no tema: desconto promocional, média com nome, par ou ímpar e mais. Teste suas habilidades!</p>
+            <div class="card-footer"><i class="fas fa-lightbulb"></i> Ver desafios</div>
+        </a>
+
+        <!-- 5) Repositório da aula -->
+        <a href="https://github.com/almeida-cma/FP_T02" target="_blank" class="card">
+            <div class="card-icon github"><i class="fab fa-github"></i></div>
+            <h3>📁 Repositório da aula</h3>
+            <p>Acesse o código fonte, exemplos e materiais complementares no GitHub. Mantenha-se atualizado com as versões.</p>
+            <div class="card-footer"><i class="fab fa-github"></i> github.com/almeida-cma/FP_T02</div>
+        </a>
+    </div>
+
+    <div class="footer">
+        <div class="footer-links">
+            <a href="https://portugol.dev/" target="_blank"><i class="fas fa-rocket"></i> Portugol Webstudio</a>
+        </div>
+        <hr>
+        <div class="entrega">
+            <i class="fas fa-upload"></i> <strong>Entrega da atividade:</strong> Crie seu repositório com os códigos desenvolvidos e envie o link através do formulário abaixo.
+            <br><br>
+            <a href="https://forms.gle/T9QSe3PyEpru3t538" target="_blank"><i class="fas fa-external-link-alt"></i> 📬 Acessar formulário de envio →</a>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.75rem; opacity: 0.7;">
+            <i class="fas fa-code"></i> TEMA 02 - Fluxogramas e Condicionais | Lógica de Programação
+        </p>
+    </div>
+</div>
+</body>
+</html>

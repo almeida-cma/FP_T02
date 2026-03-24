@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Lógica na Prática (Interativo)</title>
+
+  <style>
+    /* ==========================
+       🎨 VARIÁVEIS (ALUNOS PODEM BRINCAR AQUI)
+    ========================== */
+    :root {
+      --cor-principal: #4f46e5;
+      --cor-secundaria: #22c55e;
+      --cor-fundo: #f1f5f9;
+      --cor-card: #ffffff;
+      --cor-texto: #1e293b;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--cor-fundo);
+      color: var(--cor-texto);
+      padding: 20px;
+      transition: 0.3s;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 15px;
+    }
+
+    .box {
+      background: var(--cor-card);
+      padding: 15px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+      position: relative;
+    }
+
+    .box:hover {
+      transform: scale(1.02);
+    }
+
+    /* Estilo para as observações */
+    .observacao {
+      margin-top: 12px;
+      padding: 8px;
+      background: #fef9c3;
+      border-left: 4px solid #eab308;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      color: #854d0e;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: var(--cor-principal);
+      color: white;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: var(--cor-secundaria);
+    }
+
+    input {
+      padding: 6px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .resultado {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .customizador {
+      margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 10px;
+      background: #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+
+<h1>🎮 Brincando com Lógica + Frontend</h1>
+
+<!-- 🎨 PERSONALIZAÇÃO VISUAL -->
+<div class="customizador">
+  <strong>🎨 Personalize as cores:</strong><br>
+  Cor principal: <input type="color" onchange="mudarCor('--cor-principal', this.value)">
+  Cor secundária: <input type="color" onchange="mudarCor('--cor-secundaria', this.value)">
+  Fundo: <input type="color" onchange="mudarCor('--cor-fundo', this.value)">
+</div>
+
+<div class="grid">
+
+<!-- ========== BOX 1 - CONDIÇÃO SIMPLES ========== -->
+<!-- 📝 OBSERVAÇÃO 1: Insira sua observação aqui (substitua este texto) -->
+<div class="box">
+  <h3>1. Condição Simples (if)</h3>
+  <input type="number" id="idade" placeholder="Digite idade">
+  <button onclick="verificarIdade()">Verificar</button>
+  <div class="resultado" id="res1"></div>
+  <div class="observacao">
+    📌 <strong>OBS:</strong> A condição "if" executa um bloco apenas se a condição for verdadeira. Aqui verificamos se a idade é maior ou igual a 18.
+  </div>
+</div>
+
+<!-- ========== BOX 2 - IF/ELSE ========== -->
+<!-- 📝 OBSERVAÇÃO 2: Insira sua observação aqui (substitua este texto) -->
+<div class="box">
+  <h3>2. if / else</h3>
+  <input type="number" id="nota" placeholder="Digite nota">
+  <button onclick="verificarNota()">Verificar</button>
+  <div class="resultado" id="res2"></div>
+  <div class="observacao">
+    📌 <strong>OBS:</strong> "if/else" cria dois caminhos: se a condição for verdadeira, executa um bloco; se for falsa, executa o outro.
+  </div>
+</div>
+
+<!-- ========== BOX 3 - && (E) ========== -->
+<!-- 📝 OBSERVAÇÃO 3: Insira sua observação aqui (substitua este texto) -->
+<div class="box">
+  <h3>3. Condição com E (&&)</h3>
+  <input type="number" id="salario" placeholder="Salário">
+  <input type="number" id="tempo" placeholder="Tempo">
+  <button onclick="verificarBonus()">Verificar</button>
+  <div class="resultado" id="res3"></div>
+  <div class="observacao">
+    📌 <strong>OBS:</strong> O operador "&&" (E) exige que TODAS as condições sejam verdadeiras para executar o bloco.
+  </div>
+</div>
+
+<!-- ========== BOX 4 - SWITCH/CASE ========== -->
+<!-- 📝 OBSERVAÇÃO 4: Insira sua observação aqui (substitua este texto) -->
+<div class="box">
+  <h3>4. switch / case</h3>
+  <input type="text" id="dia" placeholder="Ex: sexta">
+  <button onclick="verificarDia()">Verificar</button>
+  <div class="resultado" id="res4"></div>
+  <div class="observacao">
+    📌 <strong>OBS:</strong> "switch/case" é útil para múltiplas opções. Compara o valor com cada "case" e executa o correspondente.
+  </div>
+</div>
+
+</div>
+
+<script>
+
+// 🎨 ALTERAR CORES DINAMICAMENTE
+function mudarCor(variavel, valor) {
+  document.documentElement.style.setProperty(variavel, valor);
+}
+
+// ==========================
+// 👉 CONDIÇÃO SIMPLES
+// ==========================
+function verificarIdade() {
+  let idade = Number(document.getElementById("idade").value);
+  let res1 = document.getElementById("res1");
+
+  if (idade >= 18) {
+    res1.innerText = "Maior de idade ✅";
+  } else {
+    res1.innerText = "Menor de idade ❌";
+  }
+}
+
+// ==========================
+// 👉 IF / ELSE
+// ==========================
+function verificarNota() {
+  let nota = Number(document.getElementById("nota").value);
+  let res2 = document.getElementById("res2");
+
+  if (nota >= 6) {
+    res2.innerText = "Aprovado 🎉";
+  } else {
+    res2.innerText = "Reprovado 😢";
+  }
+}
+
+// ==========================
+// 👉 &&
+// ==========================
+function verificarBonus() {
+  let salario = Number(document.getElementById("salario").value);
+  let tempo = Number(document.getElementById("tempo").value);
+  let res3 = document.getElementById("res3");
+
+  if (salario > 2000 && tempo >= 2) {
+    res3.innerText = "Ganhou bônus 💰";
+  } else {
+    res3.innerText = "Sem bônus";
+  }
+}
+
+// ==========================
+// 👉 SWITCH
+// ==========================
+function verificarDia() {
+  let dia = document.getElementById("dia").value.toLowerCase();
+  let res4 = document.getElementById("res4");
+  let mensagem;
+
+  switch(dia) {
+    case "segunda":
+      mensagem = "Começo de semana 💪";
+      break;
+    case "sexta":
+      mensagem = "Sextou 🎉";
+      break;
+    case "domingo":
+      mensagem = "Descanso 😴";
+      break;
+    default:
+      mensagem = "Dia comum";
+  }
+
+  res4.innerText = mensagem;
+}
+
+</script>
+
+</body>
+</html>
