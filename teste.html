@@ -351,7 +351,7 @@ programa {
 
             <!-- Conectivo E -->
             <div class="example-card">
-                <div class="card-header cond"><i class="fas fa-link"></i><h3>Conectivo Lógico "E" (&&)</h3></div>
+                <div class="card-header cond"><i class="fas fa-link"></i><h3>Conectivo Lógico "E" (e)</h3></div>
                 <div class="card-body">
                     <div class="descricao"><i class="fas fa-info-circle"></i> Todas as condições devem ser verdadeiras</div>
                     <div class="code-block" id="codigoE">
@@ -364,7 +364,7 @@ programa {
         escreva("Não está chovendo? (verdadeiro/falso): ")
         leia(nao_chovendo)
         
-        se (salario_recebido == verdadeiro E nao_chovendo == verdadeiro) {
+        se (salario_recebido == verdadeiro e nao_chovendo == verdadeiro) {
             escreva("Vou sair para comprar roupas!")
         } senao {
             escreva("Vou ficar em casa.")
@@ -384,7 +384,7 @@ programa {
 
             <!-- Conectivo OU -->
             <div class="example-card">
-                <div class="card-header cond"><i class="fas fa-link"></i><h3>Conectivo Lógico "OU" (||)</h3></div>
+                <div class="card-header cond"><i class="fas fa-link"></i><h3>Conectivo Lógico "OU" (ou)</h3></div>
                 <div class="card-body">
                     <div class="descricao"><i class="fas fa-info-circle"></i> Pelo menos uma condição deve ser verdadeira</div>
                     <div class="code-block" id="codigoOU">
@@ -397,7 +397,7 @@ programa {
         escreva("O ônibus B passou? (verdadeiro/falso): ")
         leia(onibusB)
         
-        se (onibusA == verdadeiro OU onibusB == verdadeiro) {
+        se (onibusA == verdadeiro ou onibusB == verdadeiro) {
             escreva("Conseguirei chegar no horário!")
         } senao {
             escreva("Vou me atrasar!")
@@ -432,14 +432,17 @@ programa {
         escreva("Escolha uma opção: ")
         leia(opcao)
         
-        escolha (opcao) {
+        escolha(opcao) {
             caso 1:
                 escreva("Você escolheu CADASTRAR")
+                pare
             caso 2:
                 escreva("Você escolheu LISTAR")
+                pare
             caso 3:
                 escreva("Saindo do sistema...")
-            senao:
+                pare
+            caso contrario:
                 escreva("Opção inválida!")
         }
     }
@@ -480,7 +483,7 @@ programa {
         escreva("Digite o valor do produto: R$ ")
         leia(valor)
         
-        se (codigo == "VBFMZB" OU codigo == "HT2Y8E") {
+        se (codigo == "VBFMZB" ou codigo == "HT2Y8E") {
             valor_final = valor - (valor * 0.25)
             escreva("Código válido! Desconto de 25% aplicado.\n")
             escreva("Valor com desconto: R$ ", valor_final)
@@ -565,7 +568,7 @@ programa {
         tabs.forEach(t => t.classList.remove('active'));
         buttons.forEach(b => b.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
-        if (event && event.target) event.target.classList.add('active');
+        event.target.classList.add('active');
     }
 
     // ========== SIMULAÇÕES ==========
@@ -622,13 +625,13 @@ programa {
 
     function simularE(salario, chuva) {
         const res = document.getElementById('eResultado');
-        if (salario && chuva) res.innerHTML = `💰✅ + ☀️✅ → VOU SAIR PARA COMPRAR ROUPAS!<br><small>🔍 E (&&): ambas condições verdadeiras</small>`;
+        if (salario && chuva) res.innerHTML = `💰✅ + ☀️✅ → VOU SAIR PARA COMPRAR ROUPAS!<br><small>🔍 E: ambas condições verdadeiras</small>`;
         else res.innerHTML = `💰${salario ? '✅' : '❌'} + ☀️${chuva ? '✅' : '❌'} → VOU FICAR EM CASA.<br><small>🔍 Pelo menos uma condição é falsa</small>`;
     }
 
     function simularOU(ona, onb) {
         const res = document.getElementById('ouResultado');
-        if (ona || onb) res.innerHTML = `🚌A${ona ? '✅' : '❌'} + 🚌B${onb ? '✅' : '❌'} → CONSEGUIREI CHEGAR NO HORÁRIO!<br><small>🔍 OU (||): pelo menos uma verdadeira</small>`;
+        if (ona || onb) res.innerHTML = `🚌A${ona ? '✅' : '❌'} + 🚌B${onb ? '✅' : '❌'} → CONSEGUIREI CHEGAR NO HORÁRIO!<br><small>🔍 OU: pelo menos uma verdadeira</small>`;
         else res.innerHTML = `🚌A❌ + 🚌B❌ → VOU ME ATRASAR!<br><small>🔍 Nenhuma condição verdadeira</small>`;
     }
 
@@ -636,9 +639,9 @@ programa {
         const opcao = document.getElementById('opcaoMenu').value;
         const res = document.getElementById('menuResultado');
         switch(opcao) {
-            case '1': res.innerHTML = `📝 Opção 1: CADASTRAR produto<br><small>🔍 ESCOLHA (opcao) { CASO 1: cadastrar }</small>`; break;
-            case '2': res.innerHTML = `📋 Opção 2: LISTAR produtos<br><small>🔍 ESCOLHA (opcao) { CASO 2: listar }</small>`; break;
-            case '3': res.innerHTML = `👋 Opção 3: SAIR do sistema<br><small>🔍 ESCOLHA (opcao) { CASO 3: sair }</small>`; break;
+            case '1': res.innerHTML = `📝 Opção 1: CADASTRAR produto<br><small>🔍 escolha(opcao) { caso 1: ... pare }</small>`; break;
+            case '2': res.innerHTML = `📋 Opção 2: LISTAR produtos<br><small>🔍 escolha(opcao) { caso 2: ... pare }</small>`; break;
+            case '3': res.innerHTML = `👋 Opção 3: SAIR do sistema<br><small>🔍 escolha(opcao) { caso 3: ... pare }</small>`; break;
         }
     }
 
@@ -649,7 +652,7 @@ programa {
         if (!codigo || isNaN(valor)) { res.innerHTML = '⚠️ Preencha código e valor!'; return; }
         if (codigo.toUpperCase() === "VBFMZB" || codigo.toUpperCase() === "HT2Y8E") {
             const valorFinal = valor - (valor * 0.25);
-            res.innerHTML = `✅ Código VÁLIDO!<br>Valor original: R$ ${valor.toFixed(2)}<br>Desconto 25%: R$ ${(valor*0.25).toFixed(2)}<br><strong>Total: R$ ${valorFinal.toFixed(2)}</strong><br><small>🔍 SE (codigo == "VBFMZB" OU codigo == "HT2Y8E")</small>`;
+            res.innerHTML = `✅ Código VÁLIDO!<br>Valor original: R$ ${valor.toFixed(2)}<br>Desconto 25%: R$ ${(valor*0.25).toFixed(2)}<br><strong>Total: R$ ${valorFinal.toFixed(2)}</strong><br><small>🔍 se (codigo == "VBFMZB" ou codigo == "HT2Y8E")</small>`;
         } else {
             res.innerHTML = `❌ Código INVÁLIDO!<br>Valor original: R$ ${valor.toFixed(2)}<br><strong>Total: R$ ${valor.toFixed(2)}</strong><br><small>🔍 Código não corresponde, SEM desconto</small>`;
         }
